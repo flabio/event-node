@@ -11,8 +11,8 @@ const { hasRol } = require('../middlewares/validatorRol');
 const router = Router();
 //ruoter user
 router.get('/', getEvents);
-router.get('/kanban',[  validarJWT,
-    hasRol('Admin', 'Shepherd', 'Higher'),validateFied], getKanban);
+router.get('/kanban', [validarJWT,
+    hasRol('Admin', 'Shepherd', 'Higher'), validateFied], getKanban);
 router.get('/:id', [
     validarJWT,
     hasRol('Admin', 'Shepherd', 'Higher'),

@@ -5,13 +5,15 @@ const { validateFied } = require('../middlewares');
 const { IS_NOT_VALID_ID, NAME_REQUIRED } = require('../helpers/global_constante');
 const { IsExistIdTypeEvent } = require('../database/validatorDB');
 const { validarJWT } = require('../middlewares/validarJwt');
+const { isAdminRol } = require('../middlewares/validatorRol');
 
 
 const router = Router();
 
-router.get('/',[validarJWT],getTypeEvents);
+router.get('/',[validarJWT, isAdminRol],getTypeEvents);
 router.get('/:id',[
         validarJWT,
+        isAdminRol,
         check('id',IS_NOT_VALID_ID).isMongoId(),
         check('id').custom(IsExistIdTypeEvent),
         validateFied
@@ -19,6 +21,7 @@ router.get('/:id',[
 
 router.post('/',[
         validarJWT,
+        isAdminRol,
         check('name',NAME_REQUIRED).not().isEmpty(),
        validateFied
 ],createdTypeEvent);
@@ -26,6 +29,7 @@ router.post('/',[
 
 router.put('/:id',[
         validarJWT,
+        isAdminRol,
         check('id',IS_NOT_VALID_ID).isMongoId(),
         check('id').custom(IsExistIdTypeEvent),
         check('name',NAME_REQUIRED).not().isEmpty(),
@@ -34,6 +38,7 @@ router.put('/:id',[
 
 router.delete('/:id',[
         validarJWT,
+        isAdminRol,
         check('id',IS_NOT_VALID_ID).isMongoId(),
         check('id').custom(IsExistIdTypeEvent),
         validateFied
